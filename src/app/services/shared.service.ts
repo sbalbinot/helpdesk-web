@@ -23,7 +23,7 @@ export class SharedService {
   }
 
   isLoggedIn(): boolean {
-    if (this.user === null) {
+    if (this.user == null) {
       return false
     } else {
       return this.user.email !== ''

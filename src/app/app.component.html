@@ -1,9 +1,8 @@
 <hd-header *ngIf="showTemplate"></hd-header>
 <hd-sidebar *ngIf="showTemplate"></hd-sidebar>
-<div class="content-wrapper">
+<div [ngClass]="showContentWrapper()">
 
     <section class="content-header">
-        <p>Content header here...</p>
     </section>
 
     <section class="content">
