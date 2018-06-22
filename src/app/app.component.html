@@ -1,5 +1,5 @@
-<hd-header></hd-header>
-<hd-sidebar></hd-sidebar>
+<hd-header *ngIf="showTemplate"></hd-header>
+<hd-sidebar *ngIf="showTemplate"></hd-sidebar>
 <div class="content-wrapper">
 
     <section class="content-header">
@@ -11,4 +11,4 @@
     </section>
 
 </div>
-<hd-footer></hd-footer>
+<hd-footer *ngIf="showTemplate"></hd-footer>
