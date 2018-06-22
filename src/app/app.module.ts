@@ -11,6 +11,9 @@ import { HomeComponent } from './routes/home/home.component';
 import { AuthGuard } from './routes/security/auth.guard';
 import { AuthInterceptor } from './routes/security/auth.interceptor';
 import { LoginComponent } from './routes/security/login/login.component';
+import { UserListComponent } from './routes/user/user-list/user-list.component';
+import { UserNewComponent } from './routes/user/user-new/user-new.component';
+import { DialogService } from './services/dialog.service';
 import { SharedService } from './services/shared.service';
 import { UserService } from './services/user.service';
 
@@ -22,7 +25,9 @@ import { UserService } from './services/user.service';
     SidebarComponent,
     FooterComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    UserNewComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,
@@ -31,10 +36,11 @@ import { UserService } from './services/user.service';
     routes
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    AuthGuard,
     SharedService,
     UserService,
-    AuthGuard,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    DialogService
   ],
   bootstrap: [AppComponent]
 })

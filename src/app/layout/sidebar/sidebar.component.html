@@ -1,5 +1,4 @@
 <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
@@ -11,8 +10,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="pages/forms/general.html"><i class="fa fa-circle-o"></i> List</a></li>
-            <li><a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i> New User</a></li>
+            <li><a [routerLink]="['/user-list']"><i class="fa fa-circle-o"></i> List</a></li>
+            <li><a [routerLink]="['/user-new']"><i class="fa fa-circle-o"></i> New User</a></li>
           </ul>
         </li>
         <li class="treeview">
@@ -40,5 +39,4 @@
           </li> 
       </ul>
     </section>
-    <!-- /.sidebar -->
   </aside>

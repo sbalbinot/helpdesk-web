@@ -3,9 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Ticket } from '../models/ticket.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class TicketService {
 
   constructor(private http: HttpClient) { }

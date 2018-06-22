@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'hd-sidebar',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor() { }
+  shared : SharedService;
+  
+  constructor(){
+    this.shared = SharedService.getInstance();
+  }
 
   ngOnInit() {
   }
