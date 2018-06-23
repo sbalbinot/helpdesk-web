@@ -11,11 +11,16 @@ import { HomeComponent } from './routes/home/home.component';
 import { AuthGuard } from './routes/security/auth.guard';
 import { AuthInterceptor } from './routes/security/auth.interceptor';
 import { LoginComponent } from './routes/security/login/login.component';
+import { TicketNewComponent } from './routes/ticket/ticket-new/ticket-new.component';
 import { UserListComponent } from './routes/user/user-list/user-list.component';
 import { UserNewComponent } from './routes/user/user-new/user-new.component';
 import { DialogService } from './services/dialog.service';
 import { SharedService } from './services/shared.service';
+import { TicketService } from './services/ticket.service';
 import { UserService } from './services/user.service';
+import { TicketListComponent } from './routes/ticket/ticket-list/ticket-list.component';
+import { TicketDetailComponent } from './routes/ticket/ticket-detail/ticket-detail.component';
+import { SummaryComponent } from './routes/summary/summary.component';
 
 
 @NgModule({
@@ -27,7 +32,11 @@ import { UserService } from './services/user.service';
     HomeComponent,
     LoginComponent,
     UserNewComponent,
-    UserListComponent
+    UserListComponent,
+    TicketNewComponent,
+    TicketListComponent,
+    TicketDetailComponent,
+    SummaryComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +49,7 @@ import { UserService } from './services/user.service';
     AuthGuard,
     SharedService,
     UserService,
+    TicketService,
     DialogService
   ],
   bootstrap: [AppComponent]

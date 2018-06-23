@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ResponseApi } from '../../../models/response-api';
-import { User } from '../../../models/user.model';
+import { Ticket } from '../../../models/ticket.model';
 import { DialogService } from '../../../services/dialog.service';
 import { SharedService } from '../../../services/shared.service';
-import { UserService } from '../../../services/user.service';
+import { TicketService } from '../../../services/ticket.service';
 
 @Component({
-  selector: 'hd-user-list',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css']
+  selector: 'hd-ticket-list',
+  templateUrl: './ticket-list.component.html',
+  styleUrls: ['./ticket-list.component.css']
 })
-export class UserListComponent implements OnInit {
+export class TicketListComponent implements OnInit {
 
   shared: SharedService
 
@@ -21,14 +21,16 @@ export class UserListComponent implements OnInit {
 
   message: {}
   classCss: {}
+  
+  tickets: Array<Ticket> = []
 
-  users: Array<User> = []
-
+  assigned: boolean = false  
+  filter: Ticket = new Ticket('', null, '', '', '', '', null, null, '', null)
 
   constructor( 
     private route: Router,
     private dialogService: DialogService,
-    private userService: UserService ) {
+    private ticketService: TicketService ) {
       this.shared = SharedService.getInstance()
     }
 
@@ -37,8 +39,8 @@ export class UserListComponent implements OnInit {
   }
 
   findAll(page: number, count: number) {
-    this.userService.findAll(page, count).subscribe((response: ResponseApi) => {
-      this.users = response['data']['content']
+    this.ticketService.findAll(page, count).subscribe((response: ResponseApi) => {
+      this.tickets = response['data']['content']
       this.pages = new Array(response['data']['totalPages'])
     }, error => {
       this.showMessage({
@@ -49,15 +51,19 @@ export class UserListComponent implements OnInit {
   }
 
   edit(id: string) {
-    this.route.navigate(['/user-new', id])
+    this.route.navigate(['/ticket-new', id])
+  }
+
+  detail(id: string) {
+    this.route.navigate(['/ticket-detail', id])
   }
 
   delete(id: string) {
-    this.dialogService.confirm(' Do you want to delete the user? ')
+    this.dialogService.confirm(' Do you want to delete the ticket? ')
       .then((canDelete: boolean) => {
         if (canDelete) {
           this.message = {}
-          this.userService.delete(id).subscribe((response: ResponseApi) => {
+          this.ticketService.delete(id).subscribe((response: ResponseApi) => {
             this.showMessage({
               type: 'success',
               text: 'Record deleted!'
@@ -71,6 +77,31 @@ export class UserListComponent implements OnInit {
           })
         }
       })
+  }
+
+  doFilter(): void {
+    this.page = 0
+    this.count = 5
+    this.ticketService.findByParameters(this.page, this.count, this.assigned, this.filter)
+      .subscribe((response: ResponseApi) => {
+        this.filter.title = this.filter.title == 'uninformed' ? '' : this.filter.title
+        this.filter.number = this.filter.number == 0 ? null : this.filter.number
+        this.tickets = response['data']['content']
+        this.pages = new Array(response['data']['totalPages'])
+      }, error => {
+        this.showMessage({
+          type: 'error',
+          text: error['error']['errors'][0]
+        })
+      })
+  }
+
+  cleanFilter(): void {
+    this.assigned = false
+    this.page = 0
+    this.count = 5
+    this.filter = new Ticket('', null, '', '', '', '', null, null, '', null)
+    this.findAll(this.page, this.count)
   }
 
   nextPage(event: any) {
@@ -109,5 +140,6 @@ export class UserListComponent implements OnInit {
     }
     this.classCss['alert-' + type] = true
   }
+
 
 }

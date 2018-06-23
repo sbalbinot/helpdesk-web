@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../../models/user.model';
+import { SharedService } from '../../services/shared.service';
 
 @Component({
   selector: 'hd-header',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  shared: SharedService
+
+  constructor() {
+    this.shared = SharedService.getInstance()
+    this.shared.user = new User('', '', '', '')
+  }
 
   ngOnInit() {
+  }
+
+  logout(): void {
+    this.shared.token = null
+    this.shared.user = null
+    window.location.href = '/login'
+    window.location.reload()
   }
 
 }
